@@ -1,0 +1,3 @@
+calc_index:
+    path: /
+    controller: App\Controller\CalcController::index
