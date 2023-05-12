@@ -32,7 +32,7 @@ class Order
         $this->tax = $tax;
     }
 
-    public function findCountry(array $countries): Country
+    public function findCountry(array $countries)
     {
         if($countries)
         {
@@ -58,7 +58,7 @@ class Order
             'message' => 'Введите tax номер'
         ]));
         $metadata->addPropertyConstraint('tax', new Assert\Regex([
-            'pattern' => '/^\w{2}[0-9]+$/',
+            'pattern' => '/^[A-Z]{2}[0-9]+$/',
             'match' => true,
             'message' => 'Неверный формат tax номера',
         ]));

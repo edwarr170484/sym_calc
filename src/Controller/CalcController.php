@@ -30,19 +30,20 @@ class CalcController extends AbstractController
         $order = new Order();
 
         $form = $this->createFormBuilder($order)
-                ->add('product', ChoiceType::class, ['choices' => $products, 'choice_value' => 'id', 'choice_label' => 'name', 'invalid_message' => 'Такого товара нет в продаже'])
-                ->add('tax', TextType::class)
-                ->add('save', SubmitType::class, ['label' => 'Buy Product'])->getForm();
+                ->add('product', ChoiceType::class, ['choices' => $products, 'choice_value' => 'id', 'choice_label' => 'name', 'invalid_message' => 'Такого товара нет в продаже', 'attr' => ['class' => 'form-control']])
+                ->add('tax', TextType::class, ['attr' => ['class' => 'form-control']])
+                ->add('save', SubmitType::class, ['label' => 'Расчитать цену', 'attr' => ['class' => 'w-100 btn btn-lg btn-primary']])->getForm();
         
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $order = $form->getData();
             $country = $order->findCountry($countries);
+            $price = $order->getProduct()->calculate($country);
 
-            return $this->json($order->getProduct()->calculate($country));
+            return $this->render("index.html.twig", ["form" => $form->createView(), "order" => $order, "country" => $country, "price" => $price]);
         }
 
-        return $this->render("index.html.twig", ["form" => $form->createView()]);
+        return $this->render("index.html.twig", ["form" => $form->createView(), "order" => null]);
     }
 }

@@ -42,21 +42,8 @@ class Product
         $this->price = $price;
     }
 
-    public function calculate(Country $country): float
+    public function calculate($country): float
     {
-        $response = [
-            "price" => 0,
-            "error" => 1,
-            "message" => "Не удалось определить страну"
-        ];
-
-        if($country)
-        {
-            $response["price"] = $this->price + ($this->price * $country->getTax() / 100);
-            $response["error"] = 0;
-            $response["message"] = "";
-        } 
-
-        return $response;
+        return $country ? $this->price + ($this->price * $country->getTax() / 100) : 0;
     }
 }
