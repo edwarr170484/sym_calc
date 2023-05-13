@@ -42,7 +42,7 @@ class Product
         $this->price = $price;
     }
 
-    public function calculate($country): float
+    public function calculate(?Country $country): float
     {
         return $country ? $this->price + ($this->price * $country->getTax() / 100) : 0;
     }

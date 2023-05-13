@@ -30,7 +30,7 @@ class CalcController extends AbstractController
         $order = new Order();
 
         $form = $this->createFormBuilder($order)
-                ->add('product', ChoiceType::class, ['choices' => $products, 'choice_value' => 'id', 'choice_label' => 'name', 'invalid_message' => 'Такого товара нет в продаже', 'attr' => ['class' => 'form-control']])
+                ->add('product', ChoiceType::class, ['choices' => $products, 'choice_value' => 'id', 'choice_label' => function($item){return $item->getName() . " - " . $item->getPrice() . " Евро";}, 'invalid_message' => 'Такого товара нет в продаже', 'attr' => ['class' => 'form-control']])
                 ->add('tax', TextType::class, ['attr' => ['class' => 'form-control']])
                 ->add('save', SubmitType::class, ['label' => 'Расчитать цену', 'attr' => ['class' => 'w-100 btn btn-lg btn-primary']])->getForm();
         

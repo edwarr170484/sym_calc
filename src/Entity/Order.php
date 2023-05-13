@@ -32,7 +32,7 @@ class Order
         $this->tax = $tax;
     }
 
-    public function findCountry(array $countries)
+    public function findCountry(array $countries): ?Country
     {
         if($countries)
         {
